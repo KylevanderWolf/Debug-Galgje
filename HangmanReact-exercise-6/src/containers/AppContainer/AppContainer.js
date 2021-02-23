@@ -41,17 +41,24 @@ class AppContainer extends React.Component {
     this.setState(newState);
   };
 
+  //NEW FEATURE
   guessLetterHandler = event => {
-    const inputGiven = this.state.currentChosenLetter.length > 0;
-    if (inputGiven) {
+    const duplicateCheck = this.state.guessedLetters.includes(this.state.currentChosenLetter)
+    if (this.state.currentChosenLetter.length > 0 && !duplicateCheck) {
       const newGuessedLetters = [...this.state.guessedLetters];
       newGuessedLetters.push(this.state.currentChosenLetter);
       this.setState({
-        guessedLetters: newGuessedLetters
+        guessedLetters: newGuessedLetters,
+        currentChosenLetter: ""
       });
+    } else {
+      alert('You already tried to guess the Letter ' + `"${this.state.currentChosenLetter.toUpperCase()}"`)
     }
-    this.setState({ currentChosenLetter: "" });
     event.preventDefault();
+  };
+
+  componentDidMount = () => {
+    this.restartGameHandler();
   };
 
   componentDidMount = () => {
